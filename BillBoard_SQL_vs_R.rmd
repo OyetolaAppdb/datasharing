@@ -1,0 +1,105 @@
+---
+title: "BillBoard_SQL_Vs_R"
+author: "Oyetola"
+date: "29/01/2022"
+output: rmarkdown_document
+---
+
+
+#Run the code below in R Studio to install the packages once
+```{r}
+
+install.packages(tidyverse)
+
+install.packages(lubridate)
+
+```
+
+
+#Run the code below in R Studio to load the packages at every session
+```{r}
+
+library(tidyverse)
+
+library(lubridate)
+
+```
+
+
+#Showing the entire billboard dataset, which is with the TIDYR package.
+#Note: R is case sensitive
+```{r}
+
+View (billboard)
+
+```
+
+
+
+#Display all Artist on the billboard
+```{r}
+
+billboard %>% 
+  distinct(artist)
+
+```
+
+
+#counting the number of times an Artist appeared on the Billboard
+#you may replace "Braxton, Toni" with another artist
+```{r}
+
+ billboard %>%
+  select(artist)%>%
+  filter(artist == "Braxton, Toni")%>%
+  count(artist)%>%
+  arrange(n)
+  
+```
+
+
+
+#counting the number of times more that one Artist appeared on the board
+```{r}
+
+ billboard %>%
+  select(artist)%>%
+  filter(artist == "Madonna" | artist == "Jay-Z"| artist == "Aguilera, Christina")%>%
+  count(artist)%>%
+  arrange(n)
+  
+```
+
+
+#Displaying the Artists, their track and the year they appeared on the board
+#Using "Jay-Z" and "Madonna"
+#The result is grouped by a created column called "YearA"
+```{r}
+
+
+billboard %>%
+  select(artist, track,date.entered)%>%
+  mutate(YearA=(year(date.entered)))%>%
+  filter(artist == "Jay-Z"| artist == "Madonna")%>%
+  group_by(YearA)%>%
+  arrange(desc(YearA))
+
+```
+
+
+#All except "Jay-Z" and "Madonna"
+```{r}
+
+
+billboard %>%
+  select(artist, track,date.entered)%>%
+  mutate(YearA=(year(date.entered)))%>%
+  filter(artist != "Jay-Z", artist != "Madonna")%>%
+  group_by(YearA)%>%
+  arrange(desc(YearA))
+
+```
+
+
+
+
