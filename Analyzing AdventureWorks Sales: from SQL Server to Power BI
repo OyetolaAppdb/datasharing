@@ -20,6 +20,7 @@ select  * from sales.vSalesPerson --This View comes with AdventureWorks 2017
 
 I Created a fact VIEW for Sales details. This is later split into sales from SalesPerson
 (Sales.SalesDetailsSalesPerson) and Online Sales (Sales.SalesDetailsOnlineSales) using CTEs*/
+
 create View Sales.VwSalesDetails
 as
 select sod.SalesOrderID,soh.CustomerID, sc.PersonID, soh.SalesPersonID, soh.TerritoryID,pa.PostalCode, 
@@ -37,6 +38,7 @@ go
 
 /*Below is a table created from the output of a CTE for sales created by SalesPersons,
 Totalling 60,919 records   */
+
 With CTE_SalesPerson as(
 select sod.SalesOrderID,soh.CustomerID, sc.PersonID, soh.SalesPersonID, soh.TerritoryID,pa.PostalCode, 
 sod.ProductID, sod.OrderQty, sod.UnitPrice, sod.LineTotal, soh.TaxAmt, soh.Freight,soh.SubTotal, 
@@ -55,6 +57,7 @@ go
 
 /*Below is a table created using the result of a CTE for sales created without any SalesPersons,
 Totalling 60,398 records suggestive online transactions */
+
 with CTE_OnlineSales AS(
 select sod.SalesOrderID,soh.CustomerID, sc.PersonID, soh.SalesPersonID, soh.TerritoryID,pa.PostalCode, 
 sod.ProductID, sod.OrderQty, sod.UnitPrice, sod.LineTotal, soh.TaxAmt, soh.Freight,soh.SubTotal, 
@@ -74,6 +77,7 @@ go
 /*NOTE about the two tables below:
 SalesOrderHeader contains unique saleorderID which appears once in the table (totalling 31,465).
 However, these SalesOrderIDs appear multiple times in SalesOrderDetail (totalling 121,317)*/
+
 select * from Sales.SalesOrderDetail --This View comes with AdventureWorks 2017
 select * from Sales.SalesOrderHeader --This View comes with AdventureWorks 2017
 
